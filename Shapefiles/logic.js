@@ -46,12 +46,19 @@ function gauge(parksDisplayed) {
         }
         ];
         
-        var layout = { };
-        Plotly.newPlot('gauge', data, layout,{responsive:true});
+        var layout = {height: 200, margin: {
+            l: 30,
+            r: 30,
+            b: 0,
+            t: 20,
+            pad: 4
+          },
+          paper_bgcolor: "#eeefee"};
+        Plotly.newPlot('gauge', data, layout,{responsive:true,displayModeBar: false});
 };
 
 function buttonReset () {
-    d3.selectAll('button').attr("class", "btn btn-secondary")
+    d3.select('#top10').selectAll('button').attr("class", "btn btn-secondary w-100")
     clearMap()
 }
 // function onEachFeature(feature, layer) {
@@ -59,6 +66,7 @@ function buttonReset () {
 //         layer.bindPopup(function() {`${parkDescription(feature.properties.UNIT_CODE)}`})
 //             }
 // }
+var shapeConverted
 var parksDisplayed        
 var national_parks
 var markers = L.layerGroup()
@@ -111,15 +119,16 @@ function clearMap() {
 
 function buttonToggle(element) {
     console.log(d3.select(element).attr("class"))
-    if (d3.select(element).attr("class") == "btn btn-secondary") {
+    if (d3.select(element).attr("class") == "btn btn-secondary w-100") {
         clearMap()
         showParks(["CA","WY"])
         console.log(national_parks)
-        d3.select(element).attr("class","btn btn-primary")
+        buttonReset()
+        d3.select(element).attr("class","btn btn-primary w-100")
     }
-    else if (d3.select(element).attr("class")=="btn btn-primary") {
+    else if (d3.select(element).attr("class")=="btn btn-primary w-100") {
         // d3.select(element).attr("class","btn btn-secondary")
-        // clearMap()
+        clearMap()
         buttonReset()
         showParks()
     }
