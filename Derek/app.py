@@ -61,7 +61,7 @@ def visitation():
 	        inner join national_parks np \
 	        on pv.park_name = np.park_name \
 	        group by np.park_code, pv.park_name \
-	        order by 3 desc;"
+	        order by 3 desc LIMIT 10;"
     parks_v_df = pd.read_sql(query, con = connection)
     parks_vis_list = list(np.ravel(parks_v_df))
 
