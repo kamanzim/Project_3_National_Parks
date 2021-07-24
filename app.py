@@ -50,6 +50,7 @@ def home():
         f"/api/v1.0/Trails<br/>"
         f"/api/v1.0/Trail_Features</br>"
         f"/api/v1.0/Trail_Activities</br>"
+        f"/api/v1.0/Top 10 Parks visited</br>"
         f"/api/v1.0/<start>/<end>"
      )
 
@@ -132,7 +133,6 @@ def trail_feats():
 
     return jsonify(results)
 
-
 @app.route("/api/v1.0/Trail_Activities")
 def trail_acts():
     cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
@@ -147,8 +147,27 @@ def trail_acts():
         results.append(row_dict)
 
     return jsonify(results)
-      
 
+
+@app.route("/api/v1.0/Top 10 Parks visited")
+def top_parks():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "select np.park_code, pv.park_name, sum(pv.visitors) from parks_visitation pv \
+	        inner join national_parks np \
+	        on pv.park_name = np.park_name \
+	        group by np.park_code, pv.park_name \
+	        order by 3 desc LIMIT 10;"
+    cursor.execute(query)
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
 
 @app.route("/api/v1.0/<start>/<end>")
 def startend():
