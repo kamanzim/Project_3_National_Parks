@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>National Parks Demo</title>
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="Shapefiles/css/style.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+
+  <!-- Leaflet JS & CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+    crossorigin=""></script>
+
+
+  <!-- d3 JavaScript -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+</head>
+
+<body>
+
+  <!--Nav bar-->
+  <div class="nat-homepage">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <img src="images/national_park_service.gif" width="30" height="24" class="d-inline-block align-text-top">
+          National Parks
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Maps
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">PlaceHolder1</a></li>
+                <li><a class="dropdown-item" href="#">PlaceHolder2</a></li>
+                <li><a class="dropdown-item" href="#">PlaceHolder3</a></li>
+                <li><a class="dropdown-item" href="#">PlaceHolder4</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Data</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Something else</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- information spotlight -->
+  <div class="container">
+    <!-- Top 5 parks vistation-->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="top5">
+          <h5>Top 10 National Parks by Size</h5>
+          <div id="plot"></div>
+          <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+          <script src="data.js"></script>
+          <script src="plots.js"></script>
+          <div id="line"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Park search-->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="park">
+          <h5>Park Name:</h5>
+          <select id="parkDataset" onchange="parkChanged(this.value)"></select>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Park Information</h3>
+          </div>
+          <div id="park-metadata" class="panel-body"></div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+  <!-- map div -->
+  <!-- <div id="map"></div> -->
+
+  <!-- Leaflet JS -->
+  <!-- <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+    crossorigin=""></script> -->
+  <!-- API key -->
+  <!-- <script src="https://unpkg.com/shpjs@3.6.3/dist/shp.js"></script>
+  <script type="text/javascript" src="config.js"></script> -->
+  <!-- JS  -->
+  <!-- <script type="text/javascript" src="logic.js"></script> -->
+
+  <!--Bootstrap js-->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <!-- <script type="text/javascript" src="static/js/logic3.js"></script> -->
+  <!-- <script type="text/javascript" src="static/js/logic4.js"></script> -->
+
+</body>
+
+</html>
