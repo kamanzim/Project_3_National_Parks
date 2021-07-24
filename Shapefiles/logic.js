@@ -1,7 +1,17 @@
 const npsAPIkey = "9JElOdCGJTGJeQnZ9YUJtbUdnrORrnHFGUpQCRQ4"
 const npsBaseURL = "https://developer.nps.gov/api/v1"
+const nominatim = "https://nominatim.openstreetmap.org/search.php?q="
+const regions = {"AK":["Alaska",[64.2008,-149.4937]],
+"IM":["Intermountain",[40.4555,-109.5287]],
+"MW":["Midwest",[41.5868,-93.6250]],
+"NE":["Northeast",[40.7128,-74.0060]],
+"PW":["Pacific-West",[38.8026,-116.4194]],
+"SE":["Southeast",[33.7490,-84.3880]]
+}
 
-
+var parksURL = "data/Parks.json"
+var activityURL = "data/Trail_Activities.json"
+var parkActivityFilter = ""
 
 // function myStyle(feature) {
 //     switch (feature.properties.boroughCode) {
@@ -9,6 +19,8 @@ const npsBaseURL = "https://developer.nps.gov/api/v1"
 //         case '2':   return {color: "green"};
 //     }
 // }
+
+
 
 function parkDescription(e){
     if (e.target.options.alt) {var UNIT_CODE = e.target.options.alt}
@@ -70,11 +82,11 @@ var shapeConverted
 var parksDisplayed        
 var national_parks
 var markers = L.layerGroup()
-function showParks(filter) {
+function showParks(property, filter) {
 shp("data/boundaries").then(d=>{
     // console.log(d)
     // console.log(filter)
-    national_parks = L.geoJson(d, {filter: parkFilter, style: {color: "aquamarine", opacity: 0.8, fillcolor: "aquamarine", fillOpacity: 0.4}}).addTo(mymap);
+    national_parks = L.geoJson(d, {filter: parkFilter, style: {color: "#7fffc9", opacity: 0.8, fillcolor: "#7fffc9", fillOpacity: 0.4}}).addTo(mymap);
     //use park code to grab lat/lon from DB and populate markers as well
     // L.geoJson(national_parks, {onEachFeature:onEachFeature}).addTo(mymap)
     parksDisplayed = national_parks.getLayers().length
@@ -97,9 +109,16 @@ shp("data/boundaries").then(d=>{
     }
 })
 function parkFilter(feature, layer) {
-    if (!filter) return true
-    else if (filter.includes(feature.properties.STATE)) {
-        return true}
+    if (!filter && !parkActivityFilter) return true
+    else if (!filter && parkActivityFilter) {
+        if (parkActivityFilter.includes(feature.properties.UNIT_NAME)) {return true}
+    }
+    else if (filter.includes(feature.properties[property])) {
+        if (parkActivityFilter) {
+            if (parkActivityFilter.includes(feature.properties.UNIT_NAME)) {return true}
+        }
+        else {return true}
+    }
 }// Deprecated. I manually deleted shapefile attributes to reduce the shapefile size and speed up webpage loading
 
 national_parks.on('click', function(clicked) {parkDescription(clicked)})
@@ -111,6 +130,20 @@ national_parks.on('click', function(clicked) {parkDescription(clicked)})
 })
 }
 showParks()
+function reload() {
+    parkActivityFilter = ""
+    clearMap()
+    buttonReset()
+    d3.selectAll(".filter>select").remove()
+    addStates()
+    addRegions()
+    addParks()
+    addActivities()
+    mymap.flyTo([ 39.656570, -96.479204],4)
+    showParks()
+}
+
+
 
 function clearMap() {
     mymap.removeLayer(national_parks)
@@ -155,3 +188,154 @@ var mymap = L.map('map',{
 var getUrl = window.location;
 var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 console.log(baseUrl)
+
+function getStateCenter(state) {
+    if (state == "default") {
+        clearMap()
+        showParks()
+        mymap.flyTo([ 39.656570, -96.479204],4)}
+    else {
+    d3.json(`${nominatim}${state}%2C+US&format=jsonv2`).then(response=>{
+        var center = [response[0].lat, response[0].lon]
+        clearMap()
+        showParks("STATE",state)
+        mymap.flyTo(center,7)
+    }
+
+    )
+}
+}
+
+function regionCenter(region) {
+    if (region == "default") {
+        clearMap()
+        showParks()
+    mymap.flyTo([ 39.656570, -96.479204],4)}
+    else {
+    var center = regions[region][1]
+    clearMap()
+    showParks("REGION",region)
+    mymap.flyTo(center,5)
+    }
+}
+
+function goToPark(park_code) {
+
+    if (park_code == "default") {
+        clearMap()
+        showParks()
+    mymap.flyTo([ 39.656570, -96.479204],4)}
+    else {
+        d3.json(parksURL).then(parks=>{
+            parks.forEach(park=>{
+                if (park.park_code == park_code) {
+                    var center = [park.latitude,park.longitude]
+                    clearMap()
+                    showParks("UNIT_CODE",park_code)
+                    mymap.flyTo(center,8)
+                }
+            })
+        })
+    }
+}
+
+function activityFilter(activity) {
+    if (activity == "default") {
+        parkActivityFilter=""
+        clearMap()
+        showParks()
+        
+    }
+    else{
+    d3.json(activityURL).then(d=>{
+        var parks = []
+        d.forEach(result=>{
+            if (result.activities == activity) {
+                if (!parks.includes(result.park_name)) {
+                    parks.push(result.park_name)
+                }
+            }
+        })
+        // console.log(parks)
+        parkActivityFilter = parks
+        clearMap()
+        if (!(d3.select("#parkSelect>select").property('value') == "default")) {goToPark(d3.select("#parkSelect>select").property('value'))}
+        if (!(d3.select("#stateSelect>select").property('value') == "default")) {getStateCenter(d3.select("#stateSelect>select").property('value'))}
+        if (!(d3.select("#regionSelect>select").property('value') == "default")) {regionCenter(d3.select("#regionSelect>select").property('value'))}
+        else {showParks("UNIT_NAME",parks)}
+    })
+    }
+}
+
+function addStates() {
+    d3.json("data/abbr-name.json").then(states=>{
+        d3.select("#stateSelect").append('select').classed('w-100',true)
+        d3.select("#stateSelect>select").attr('onchange','getStateCenter(this.value)')
+        d3.select('#stateSelect>select').append('option').text("Select a State").property('value',"default")
+        Object.entries(states).forEach(([key,value])=>{
+            d3.select("#stateSelect>select").append('option').text(value).property('value',key)
+        })
+        
+    })
+    }
+addStates()
+
+function addRegions() {
+    d3.select("#regionSelect").append('select').classed('w-100',true)
+        d3.select("#regionSelect>select").attr('onchange','regionCenter(this.value)')
+        d3.select('#regionSelect>select').append('option').text("Select a Region").property('value',"default")
+        Object.entries(regions).forEach(([key,value])=>{
+            d3.select("#regionSelect>select").append('option').text(value[0]).property('value',key)
+        })
+}
+addRegions()
+
+function addParks() {
+    d3.select("#parkSelect").append('select').classed('w-100',true)
+    d3.select("#parkSelect>select").append('option').text("Select a Park").property('value',"default")
+    d3.select("#parkSelect>select").attr('onchange','goToPark(this.value)')
+    d3.json(parksURL).then(result=>{
+      
+    result.forEach(park=>{
+        d3.select("#parkSelect>select").append('option').text(park.park_name).property('value',park.park_code)
+        })
+    })
+}
+addParks()
+
+function addActivities() {
+    d3.select("#activitySelect").append('select').classed('w-100',true)
+    d3.select("#activitySelect>select").append('option').text("Select an Activity").property('value',"default")
+    d3.select("#activitySelect>select").attr('onchange','activityFilter(this.value)')
+    d3.json(activityURL).then(result=>{
+        var activity = result.map(d=>d.activities)
+        var activities = []
+        activity.forEach(activity=>{
+            if (!activities.includes(activity)) {activities.push(activity)}
+        })
+        activities.forEach(activity=>{
+            d3.select("#activitySelect>select").append('option').text(activity)
+
+        })
+    })
+
+}
+addActivities()
+
+function clearRegion() {
+    d3.selectAll("#regionSelect>select").remove() 
+    addRegions()
+}
+function clearState() {
+    d3.selectAll("#stateSelect>select").remove() 
+    addStates()
+}
+function clearParks () {
+    d3.selectAll("#parkSelect>select").remove() 
+    addParks()
+}
+
+function clearActivities() {
+    d3.selectAll("#parkSelect>select").remove()
+    addActivities()
+}

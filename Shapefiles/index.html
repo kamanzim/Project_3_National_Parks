@@ -63,66 +63,24 @@
       </div>
       <h5>Filter Parks</h5>
       <p>
-        <div class="btn-group">
-          <button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="None selected" aria-expanded="false">
-            <span class="multiselect-selected-text">None selected</span> <b class="caret"></b>
-          </button>
-              <ul class="multiselect-container dropdown-menu">
-                <li>options</li>      
-              </ul>
-          </div>
+        <div id="regionSelect" class="filter">
+        </div>
       </p>
+      <p>
+        <div id="stateSelect" class="filter">
+        </div>
+        </p>
         <p>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              State
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+          <div id="parkSelect" class="filter">
           </div>
         </p>
         <p>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Region
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+          <div id="activitySelect" class="filter">
           </div>
         </p>
         <p>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Activities
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
-        </p>
-        <p>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Choose a Park
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
-        </p>
-        <p>
-          <button type="button" class="btn btn-secondary w-50" data-toggle="button"  autocomplete="off" onclick="buttonToggle(this)">
-            Activate Filter
+          <button type="button" class="btn btn-secondary w-50" data-toggle="button"  autocomplete="off" onclick="reload()">
+            Reset Map
           </button>
           </p>
       
