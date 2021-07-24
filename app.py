@@ -7,7 +7,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 
 #################################################
@@ -41,18 +41,24 @@ app = Flask(__name__)
 #################################################
 @app.route("/")
 def home():
-     return (
-        f"Welcome to the National Park Dashboard API<br/>"
-        f"Available Routes:<br/>"
-        f"/api/v1.0/Parks<br/>"
-        f"/api/v1.0/Visitation<br/>"
-        f"/api/v1.0/Species<br/>"
-        f"/api/v1.0/Trails<br/>"
-        f"/api/v1.0/Trail_Features</br>"
-        f"/api/v1.0/Trail_Activities</br>"
-        f"/api/v1.0/Top 10 Parks visited</br>"
-        f"/api/v1.0/<start>/<end>"
-     )
+    return render_template("index.html")
+
+@app.route("/api/v1.0/routes")
+def routes():
+    return (
+    f"Welcome to the National Park Dashboard API<br/>"
+    f"Available Routes:<br/>"
+    f"/api/v1.0/Parks<br/>"
+    f"/api/v1.0/Visitation<br/>"
+    f"/api/v1.0/Species<br/>"
+    f"/api/v1.0/Trails<br/>"
+    f"/api/v1.0/Trail_Features</br>"
+    f"/api/v1.0/Trail_BY_ParkCode</br>"
+    f"/api/v1.0/Trail_Activities</br>"
+    f"/api/v1.0/Top 10 Parks visited</br>"
+    f"/api/v1.0/<start>/<end>"
+    )
+
 
 @app.route("/api/v1.0/Parks")
 def parks():
@@ -122,6 +128,24 @@ def trails():
 def trail_feats():
     cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
     cursor.execute("SELECT * FROM trail_features")
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
+
+@app.route("/api/v1.0/Trail_BY_ParkCode")
+def trail_by_parkcode():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "select np.park_code,ta.activities from trail_activities ta \
+	            inner join national_parks np \
+	            on ta.park_name = np.park_name;"
+    cursor.execute(query)
     columns = list(cursor.description)
     result = cursor.fetchall()
     results = []
