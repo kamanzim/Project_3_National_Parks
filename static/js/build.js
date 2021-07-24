@@ -22,7 +22,7 @@ function addParks() {
   d3.select("#parkDataset>select").append('option').text("Select a Park")
   //d3.select("#parkDataset>select").attr('onchange','goToPark(this.value)')
   d3.json("/api/v1.0/Parks").then(result=>{
-    var pNames = Object.entries(result);
+    var pNames = result.map(p => p.park_name);
     result.forEach(park=>{
       d3.select("#parkDataset>select").append('option').text(park.park_name).property('value',park.park_code)
       });
