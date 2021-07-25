@@ -193,6 +193,62 @@ def top_parks():
 
     return jsonify(results)
 
+@app.route("/api/v1.0/Bottom_10_Parks_visited")
+def bottom_parks():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "select np.park_code, pv.park_name, sum(pv.visitors) from parks_visitation pv \
+	        inner join national_parks np \
+	        on pv.park_name = np.park_name \
+	        group by np.park_code, pv.park_name \
+	        order by 3 asc LIMIT 10;"
+    cursor.execute(query)
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
+
+@app.route("/api/v1.0/Trail_Miles")
+def trail_miles():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    cursor.execute("select np.park_code, pt.park_name, sum(pt.length) from park_trails pt \
+	        inner join national_parks np \
+	        on pt.park_name = np.park_name \
+	        group by np.park_code, pt.park_name \
+	        order by 3 desc LIMIT 10;")
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
+
+@app.route("/api/v1.0/top_10_size")
+def top_10_size():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "select np.park_code, np.park_name, np.acres from national_parks np \
+	         order by 3 desc LIMIT 10;"
+    cursor.execute(query)
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
+
 @app.route("/api/v1.0/<start>/<end>")
 def startend():
     return (
