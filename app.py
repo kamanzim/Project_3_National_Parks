@@ -249,6 +249,26 @@ def top_10_size():
 
     return jsonify(results)
 
+
+@app.route("/api/v1.0/rare_species")
+def rare_species():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "select np.park_code, sp.park_name, count(sp.common_names) from species sp \
+            inner join national_parks np \
+	        on sp.park_name = np.park_name \
+			WHERE sp.abundance = 'Rare'\
+	        group by np.park_code, sp.park_name;"
+    cursor.execute(query)
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
 @app.route("/api/v1.0/<start>/<end>")
 def startend():
     return (
