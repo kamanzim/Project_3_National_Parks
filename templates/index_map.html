@@ -20,12 +20,79 @@
     <!-- d3 JavaScript -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
     <link rel="stylesheet" type="text/css" href="static/css/map_style.css">
   </head>
   <body>
-    <div class="container-fluid h-100" id="mapArea">
-    <div class="row h-100 justify-content-center">
-      <div class="col-2 h-100">
+    <div class="container-fluid">
+    <div class="nat-homepage">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      
+        <a class="navbar-brand" href="index.html">
+          <img src="../static/img/national_park_service.gif" width="30" height="24" class="d-inline-block align-text-top">
+          National Parks
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Maps
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">PlaceHolder1</a></li>
+                <li><a class="dropdown-item" href="#">PlaceHolder2</a></li>
+                <li><a class="dropdown-item" href="#">PlaceHolder3</a></li>
+                <li><a class="dropdown-item" href="#">PlaceHolder4</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Data</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Something else</a>
+            </li>
+          </ul>
+        
+        </div>
+      </nav>
+    </div>
+  
+
+    <!-- <div class="container-fluid"> -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="top10">
+          <h4>Top 10 Most Visted National Parks</h4>
+          <div id="line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <div class="well">
+          <h4>Park Name:</h4>
+          <select id="parkDataset" onchange="parkChange(this.value)"></select>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Park Information</h3>
+          </div>
+          <div id="park-metadata" class="panel-body"></div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+    <div class="row h-100 justify-content-center" id="mapArea">
+      <div class="col-2 px-4" id="filterArea">
         <p>
         <div id="gauge"></div>
         </p>
@@ -81,7 +148,7 @@
           </p>
       
       </div>
-      <div class="col-10 h-100">
+      <div class="col-10">
       <!-- map div -->
         <div id="map"></div>
     </div>
@@ -98,8 +165,11 @@
     <script src="https://unpkg.com/shpjs@3.6.3/dist/shp.js"></script>
     <!-- API key -->
     <script type="text/javascript" src="static/js/config.js"></script>
+    <!--build webpage-->
+    <script src="../static/js/build.js"></script>
       <!-- Map JS -->
     <script type="text/javascript" src="static/js/logic.js"></script>
+    
 
   </body>
 </html>

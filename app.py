@@ -257,7 +257,8 @@ def rare_species():
             inner join national_parks np \
 	        on sp.park_name = np.park_name \
 			WHERE sp.abundance = 'Rare'\
-	        group by np.park_code, sp.park_name;"
+	        group by np.park_code, sp.park_name \
+            order by 3 desc LIMIT 10;"
     cursor.execute(query)
     columns = list(cursor.description)
     result = cursor.fetchall()

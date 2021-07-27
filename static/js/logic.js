@@ -58,15 +58,16 @@ function buttonReset () {
 }
 
 var parksDisplayed        
-var national_parks
+var national_parks_layers
 var markers = L.layerGroup()
 function showParks(property, filter) {
 shp("/static/data/boundaries").then(d=>{
-    national_parks = L.geoJson(d, {filter: parkFilter, style: {color: "#7dc27b", opacity: 0.8, fillcolor: "#7dc27b", fillOpacity: 0.4}}).addTo(mymap);
-    parksDisplayed = national_parks.getLayers().length
+    national_parks_layers = L.geoJson(d, {filter: parkFilter, style: {color: "#7dc27b", opacity: 0.8, fillcolor: "#7dc27b", fillOpacity: 0.4}}).addTo(mymap);
+    parksDisplayed = national_parks_layers.getLayers().length
     gauge(parksDisplayed)
-    national_parks.eachLayer(layer=>{
+    national_parks_layers.eachLayer(layer=>{
         var feature = layer.feature
+        console.log(feature)
     if (feature.geometry.type === 'Polygon'|| feature.geometry.type === 'MultiPolygon') {
         var bounds = layer.getBounds();
         var center = bounds.getCenter();
@@ -86,7 +87,7 @@ function parkFilter(feature, layer) {
     }
 }
 
-national_parks.on('click', function(clicked) {parkDescription(clicked)})
+national_parks_layers.on('click', function(clicked) {parkDescription(clicked)})
 
 })
 }
@@ -107,7 +108,7 @@ function reload() {
 
 
 function clearMap() {
-    mymap.removeLayer(national_parks)
+    mymap.removeLayer(national_parks_layers)
     markers.eachLayer(function(layer) {markers.removeLayer(layer);})
 }
 
