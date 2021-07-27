@@ -63,7 +63,7 @@ def routes():
 @app.route("/api/v1.0/Parks")
 def parks():
     cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute("SELECT * FROM national_parks")
+    cursor.execute("SELECT * FROM national_parks order by park_name")
     columns = list(cursor.description)
     result = cursor.fetchall()
     results = []
