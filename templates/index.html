@@ -3,11 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>National Parks Demo</title>
   <!--Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
@@ -72,11 +75,11 @@
 
   <!-- information spotlight -->
   <div class="container">
-    <!-- Top 5 parks vistation-->
+    <!-- Top 10 parks vistation-->
     <div class="row">
       <div class="col-md-8">
-        <div class="top5">
-          <h5>Top 10 Most Visted National Parks</h5>
+        <div class="top10">
+          <h4>Top 10 Most Visted National Parks</h4>
           <div id="line"></div>
         </div>
       </div>
@@ -84,10 +87,10 @@
 
     <!-- Park search-->
     <div class="row">
-      <div class="col-md-6">
-        <div class="park">
-          <h5>Park Name:</h5>
-          <div id="parkDataset" onchange="parkChange(this.value)"></div>
+      <div class="col-md-5">
+        <div class="well">
+          <h4>Park Name:</h4>
+          <select id="parkDataset" onchange="parkChange(this.value)"></select>
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
