@@ -61,7 +61,7 @@ var parksDisplayed
 var national_parks
 var markers = L.layerGroup()
 function showParks(property, filter) {
-shp("../static/data/boundaries").then(d=>{
+shp("/static/data/boundaries").then(d=>{
     national_parks = L.geoJson(d, {filter: parkFilter, style: {color: "#7dc27b", opacity: 0.8, fillcolor: "#7dc27b", fillOpacity: 0.4}}).addTo(mymap);
     parksDisplayed = national_parks.getLayers().length
     gauge(parksDisplayed)
@@ -119,7 +119,7 @@ function buttonToggle(element) {
         d3.json(route).then(api=>{
             var selParks = api.map(park=>park.park_code)
             showParks("UNIT_CODE", selParks)
-            console.log(api)
+            console.log(selParks)
         })
         buttonReset()
         d3.select(element).attr("class","btn btn-primary w-100")
