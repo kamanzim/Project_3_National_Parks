@@ -4,13 +4,10 @@ function metadata(s) {
   d3.json("/api/v1.0/Parks").then((data) => {
     
     var parkName = data.filter(p => p.park_name == s);
-    console.log(parkName);
-    //var setArray = parkName.filter(sObject => sObject.park_name == s);
+    //console.log(parkName);
+  
     var result = parkName[0];
-
-    console.log(result);
-
-    
+    //console.log(result);
 
     var demographic = d3.select("#park-metadata");
     demographic.html("");
@@ -46,7 +43,7 @@ function init() {
   //console.log(data.park_name);
   d3.json("/api/v1.0/Parks").then((p) => {
     var pNames = p.map(p => p.park_name);
-    console.log(pNames)
+    //console.log(pNames)
     pNames.forEach((s) => {
       selector
       .append("option")
@@ -54,18 +51,18 @@ function init() {
       .property("value", s);
     });
 
-    // Pass in the first sample to create the graph and demographic info
+    // Pass in the first Park Name to create the graph and demographic info
     const initialPark = pNames[0];
-    console.log(initialPark)
+    // console.log(initialPark)
     metadata(initialPark);
     // buildGraphs(initalSample);
  });
 }
 
-function parkChange(nSample) {
+function parkChange(nPark) {
   // Pass in the new sample once selected in the dropdown
   //console.log(nSample)
-  metadata(nSample);
+  metadata(nPark);
   //buildGraphs(nSample);
 }
 
