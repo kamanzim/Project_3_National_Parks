@@ -21,9 +21,22 @@ body {
   font-family: 'Times New Roman', Times, serif;
 }
 
-.top10 {
-  padding-top: 30px;
+.graphs {
+  /* padding-top: 30px; */
+  padding-bottom: 20px;
   font-weight: bolder;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#park-metadata {
+  margin-inline-start: .5cm;
+  margin-inline-end: .5cm;
+}
+
+/* Media Queries */
+@media(max-width: 1500px) {
+  .graphs{
+      max-height: none; 
+  } 
 }
 
