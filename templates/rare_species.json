@@ -1,0 +1,52 @@
+[
+  {
+    "count": 1190, 
+    "park_code": "GRSM", 
+    "park_name": "Great Smoky Mountains National Park"
+  }, 
+  {
+    "count": 682, 
+    "park_code": "EVER", 
+    "park_name": "Everglades National Park"
+  }, 
+  {
+    "count": 450, 
+    "park_code": "YELL", 
+    "park_name": "Yellowstone National Park"
+  }, 
+  {
+    "count": 389, 
+    "park_code": "BISC", 
+    "park_name": "Biscayne National Park"
+  }, 
+  {
+    "count": 368, 
+    "park_code": "CHIS", 
+    "park_name": "Channel Islands National Park"
+  }, 
+  {
+    "count": 364, 
+    "park_code": "CUVA", 
+    "park_name": "Cuyahoga Valley National Park"
+  }, 
+  {
+    "count": 342, 
+    "park_code": "YOSE", 
+    "park_name": "Yosemite National Park"
+  }, 
+  {
+    "count": 316, 
+    "park_code": "GLAC", 
+    "park_name": "Glacier National Park"
+  }, 
+  {
+    "count": 311, 
+    "park_code": "SHEN", 
+    "park_name": "Shenandoah National Park"
+  }, 
+  {
+    "count": 276, 
+    "park_code": "MORA", 
+    "park_name": "Mount Rainier National Park"
+  }
+]

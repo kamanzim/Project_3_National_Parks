@@ -67,7 +67,6 @@ shp("/static/data/boundaries").then(d=>{
     gauge(parksDisplayed)
     national_parks_layers.eachLayer(layer=>{
         var feature = layer.feature
-        console.log(feature)
     if (feature.geometry.type === 'Polygon'|| feature.geometry.type === 'MultiPolygon') {
         var bounds = layer.getBounds();
         var center = bounds.getCenter();
@@ -120,7 +119,7 @@ function buttonToggle(element) {
         d3.json(route).then(api=>{
             var selParks = api.map(park=>park.park_code)
             showParks("UNIT_CODE", selParks)
-            console.log(selParks)
+            // console.log(selParks)
         })
         buttonReset()
         d3.select(element).attr("class","btn btn-primary w-100")
