@@ -2,7 +2,7 @@ import numpy as np
 from config import password
 from config import username
 import psycopg2
-import sqlalchemy
+# import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
@@ -41,7 +41,7 @@ app = Flask(__name__)
 #################################################
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index_map.html")
 
 @app.route("/api/v1.0/routes")
 def routes():
@@ -270,6 +270,24 @@ def rare_species():
         results.append(row_dict)
 
     return jsonify(results)
+
+@app.route("/api/v1.0/top_10_arces")
+def top_10_acres():
+    cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "select TRIM(TRAILING 'Park ' from park_name) as park_name, sum(acres) from national_parks \
+             group by park_name order by 2 desc LIMIT 10;"
+    cursor.execute(query)
+    columns = list(cursor.description)
+    result = cursor.fetchall()
+    results = []
+    for row in result:
+        row_dict = {}
+        for i, col in enumerate(columns):
+            row_dict[col.name] = row[i]
+        results.append(row_dict)
+
+    return jsonify(results)
+
 @app.route("/api/v1.0/<start>/<end>")
 def startend():
     return (

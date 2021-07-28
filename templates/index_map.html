@@ -1,175 +1,160 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>National Parks Demo</title>
+
+<head>
+  <meta charset="UTF-8">
+  <title>National Parks Demo</title>
 
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
     integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-    crossorigin=""/>
-    <!-- Leaflet javascript -->
-    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    crossorigin="" />
+  <!-- Leaflet javascript -->
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
     integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
     crossorigin=""></script>
-    <!-- Plotly javascript -->
-    <script src="https://cdn.plot.ly/plotly-2.2.0.min.js"></script>
-    <!-- d3 JavaScript -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="static/css/map_style.css">
-  </head>
-  <body>
-    <div class="container-fluid">
-    <div class="nat-homepage">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      
-        <a class="navbar-brand" href="index.html">
-          <img src="../static/img/national_park_service.gif" width="30" height="24" class="d-inline-block align-text-top">
-          National Parks
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Maps
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="#">PlaceHolder1</a></li>
-                <li><a class="dropdown-item" href="#">PlaceHolder2</a></li>
-                <li><a class="dropdown-item" href="#">PlaceHolder3</a></li>
-                <li><a class="dropdown-item" href="#">PlaceHolder4</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Data</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Something else</a>
-            </li>
-          </ul>
-        
+  <!-- Plotly javascript -->
+  <script src="https://cdn.plot.ly/plotly-2.2.0.min.js"></script>
+  <!-- d3 JavaScript -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/map_style.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+      <div class="card text-center border-0" style="background-color: rgb(154, 168, 125)">
+        <div class="card-body">
+          <h2 class="card-title">National Parks</h2>
+          <img src="../static/img/national_park_service.gif" height="150px">
         </div>
-      </nav>
-    </div>
-  
+      </div>
+
 
     <!-- <div class="container-fluid"> -->
-    <div class="row">
-      <div class="col-md-8">
-        <div class="top10">
-          <h4>Top 10 Most Visted National Parks</h4>
-          <div id="line"></div>
+    <div class="graphs">
+      <div class="row">
+        <div class="col-md-4 col-lg-4">
+          <div id="top10_visit_plot"></div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+          <div id="acres_plot"></div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+          <div id="rare_plot"></div>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-5">
-        <div class="well">
+      <div class="col-md-4">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 26rem;">
           <h4>Park Name:</h4>
           <select id="parkDataset" onchange="parkChange(this.value)"></select>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Park Information</h3>
+          <div class="card-body">
+            <h4 class="card-title"> <img src="../static/img/national_park_service.gif" width="30" height="24">
+              Park Information
+            </h4>
           </div>
-          <div id="park-metadata" class="panel-body"></div>
+          <div id="park-metadata"></div>
         </div>
       </div>
     </div>
-    
   </div>
 
 
-    <div class="row h-100 justify-content-center" id="mapArea">
-      <div class="col-2 px-4" id="filterArea">
-        <p>
-        <div id="gauge"></div>
-        </p>
-        <div id="top10">
+  <div class="row h-100 justify-content-center" id="mapArea">
+    <div class="col-2 px-4" id="filterArea">
+      <p>
+      <div id="gauge"></div>
+      </p>
+      <div id="top10">
         <h5>Top 10 Rankings</h5>
         <p>
-        <button type="button" class="btn btn-secondary w-100" data-toggle="button"  autocomplete="off" route="/api/v1.0/Top 10 Parks visited" onclick="buttonToggle(this)">
-          Most Visited Parks
-        </button>
-      </p>
-      <p>
-        <button type="button" class="btn btn-secondary w-100" data-toggle="button"  autocomplete="off" route="/api/v1.0/Bottom_10_Parks_visited" onclick="buttonToggle(this)">
-          Least Visited Parks
-        </button>
-      </p>
-      <p>
-        <button type="button" class="btn btn-secondary w-100" data-toggle="button"  autocomplete="off" route = "/api/v1.0/Trail_Miles" onclick="buttonToggle(this)">
-          Most Trail Miles
-        </button>
+          <button type="button" class="btn btn-secondary w-100" data-toggle="button" autocomplete="off"
+            route="/api/v1.0/Top 10 Parks visited" onclick="buttonToggle(this)">
+            Most Visited Parks
+          </button>
         </p>
         <p>
-        <button type="button" class="btn btn-secondary w-100" data-toggle="button"  autocomplete="off" route="/api/v1.0/top_10_size" onclick="buttonToggle(this)">
-          Largest Parks
-        </button>
+          <button type="button" class="btn btn-secondary w-100" data-toggle="button" autocomplete="off"
+            route="/api/v1.0/Bottom_10_Parks_visited" onclick="buttonToggle(this)">
+            Least Visited Parks
+          </button>
         </p>
         <p>
-        <button type="button" class="btn btn-secondary w-100" data-toggle="button"  autocomplete="off" route="/api/v1.0/rare_species" onclick="buttonToggle(this)">
-          Most Rare Species
-        </button>
+          <button type="button" class="btn btn-secondary w-100" data-toggle="button" autocomplete="off"
+            route="/api/v1.0/Trail_Miles" onclick="buttonToggle(this)">
+            Most Trail Miles
+          </button>
+        </p>
+        <p>
+          <button type="button" class="btn btn-secondary w-100" data-toggle="button" autocomplete="off"
+            route="/api/v1.0/top_10_size" onclick="buttonToggle(this)">
+            Largest Parks
+          </button>
+        </p>
+        <p>
+          <button type="button" class="btn btn-secondary w-100" data-toggle="button" autocomplete="off"
+            route="/api/v1.0/rare_species" onclick="buttonToggle(this)">
+            Most Rare Species
+          </button>
         </p>
       </div>
       <h5>Filter Parks</h5>
       <p>
-        <div id="regionSelect" class="filter">
-        </div>
+      <div id="regionSelect" class="filter">
+      </div>
       </p>
       <p>
-        <div id="stateSelect" class="filter">
-        </div>
-        </p>
-        <p>
-          <div id="parkSelect" class="filter">
-          </div>
-        </p>
-        <p>
-          <div id="activitySelect" class="filter">
-          </div>
-        </p>
-        <p>
-          <button type="button" class="btn btn-secondary w-50" data-toggle="button"  autocomplete="off" onclick="reload()">
-            Reset Map
-          </button>
-          </p>
-      
+      <div id="stateSelect" class="filter">
       </div>
-      <div class="col-10">
+      </p>
+      <p>
+      <div id="parkSelect" class="filter">
+      </div>
+      </p>
+      <p>
+      <div id="activitySelect" class="filter">
+      </div>
+      </p>
+      <p>
+        <button type="button" class="btn btn-secondary w-50" data-toggle="button" autocomplete="off" onclick="reload()">
+          Reset Map
+        </button>
+      </p>
+
+    </div>
+    <div class="col-10">
       <!-- map div -->
-        <div id="map"></div>
+      <div id="map"></div>
     </div>
   </div>
-</div>
+  </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
     integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
     crossorigin=""></script>
-    <!-- Bootstrap javascript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- Shape-JS -->
-    <script src="https://unpkg.com/shpjs@3.6.3/dist/shp.js"></script>
-    <!-- API key -->
-    <script type="text/javascript" src="static/js/config.js"></script>
-    <!--build webpage-->
-    <script src="../static/js/build.js"></script>
-      <!-- Map JS -->
-    <script type="text/javascript" src="static/js/logic.js"></script>
-    
+  <!-- Bootstrap javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <!-- Shape-JS -->
+  <script src="https://unpkg.com/shpjs@3.6.3/dist/shp.js"></script>
+  <!-- API key -->
+  <script type="text/javascript" src="static/js/config.js"></script>
+  <!--build webpage-->
+  <script src="../static/js/build.js"></script>
+  <!-- Map JS -->
+  <script type="text/javascript" src="static/js/logic.js"></script>
 
-  </body>
+
+</body>
+
 </html>
