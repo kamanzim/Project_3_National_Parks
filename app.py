@@ -56,6 +56,7 @@ def routes():
     f"/api/v1.0/Trail_BY_ParkCode</br>"
     f"/api/v1.0/Trail_Activities</br>"
     f"/api/v1.0/Top 10 Parks visited</br>"
+    f"/api/v1.0/top_10_arces</br>"
     f"/api/v1.0/<start>/<end>"
     )
 
