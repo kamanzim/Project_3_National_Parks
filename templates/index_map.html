@@ -27,14 +27,14 @@
 </head>
 
 <body>
-  <div class="container-fluid">
+  <div class="container gx-0" style="background-color:#eeefee">
       <!-- <div class="card border-0" style="background-color:#6c757d">
         <div class="card-body">
           <h2 class="card-title">National Parks</h2>
           <img src="../static/img/national_park_service.gif" height="100px">
         </div>
       </div> -->
-      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#6c757d">
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top container" style="background-color:#6c757d">
         <a class="navbar-brand mx-2" href="#">
           <img src="../static/img/national_park_service.gif" height="30" class="d-inline-block align-top" alt="">
           Explore the National Parks</a>
@@ -47,7 +47,7 @@
               <a class="nav-link" href="#">Top Ten Parks</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Park Information</a>
+              <a class="nav-link" href="#parkInfoLink">Park Information</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#mapLink">Interactive Park Map</a>
@@ -59,25 +59,26 @@
 
     <!-- <div class="container-fluid"> -->
     <div class="graphs">
-      <div class="row gy-4">
-        <div class="col-md-6 col-xl-3">
+      <div class="row gy-1 gx-1 mt-5">
+        <div class="col-lg-6">
           <div id="top10_visit_plot"></div>
         </div>
-        <div class="col-md-6 col-xl-3">
+        <div class="col-lg-6">
           <div id="acres_plot"></div>
         </div>
-        <div class="col-md-6 col-xl-3">
+        <div class="col-lg-6">
           <div id="rare_plot"></div>
         </div>
-        <div class="col-md-6 col-xl-3">
+        <div class="col-lg-6">
           <div id="trail_plot"></div>
         </div>
       </div>
+      
     </div>
-    <br>
-
+    <a class = "anchor" id="parkInfoLink"></a>
     <div class="row" style="height: 350px">
       <div class="col-md-4">
+        
         <div class="card text-white bg-secondary mb-3" style="height: 350px" >
         <!-- style="max-width: 100%;"> -->
           <h4>Park Name:</h4>
@@ -87,19 +88,19 @@
               Park Information
             </h4>
           </div>
-          <div id="park-metadata"></div>
+          <div id="park-metadata" class="mx-2"></div>
         </div>
       </div>
       <div class = "col-md-8">
-        <img id = "wonderCalls" class="image-fluid h-100" src="/static/data/wonder_calls.jpg">
+        <img id = "wonderCalls" class="image-fluid" src="/static/img/wonder_calls.jpg" style="height: 350px">
 
       </div>
     </div>
 
-    <a id="mapLink">
-  <div class="row h-100 justify-content-center" id="mapArea">
+    <a class="anchor" id="mapLink">
+  <div class="row justify-content-center mx-0" id="mapArea">
   </a>
-    <div class="col-2 px-4" id="filterArea">
+    <div class="col-2 px-4" id="filterArea" style="height: 900px">
       <p>
       <div id="gauge"></div>
       </p>
@@ -160,7 +161,7 @@
       </p>
 
     </div>
-    <div class="col-10">
+    <div class="col-10 px-0">
       <!-- map div -->
       <div id="map"></div>
     </div>

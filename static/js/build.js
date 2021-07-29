@@ -19,7 +19,8 @@ function metadata(s) {
 }
 
 function buildGraphs() {
-
+  var paper_bgcolor = "white"
+  var vbarColor = "#4974a5"
   // Build the top 10 parks per arcers
   d3.json("/api/v1.0/top_10_arces").then((data) => {
     console.log("acres",data)
@@ -33,6 +34,9 @@ function buildGraphs() {
     {
       x: parkName,
       y: totalAcres,
+      marker: {
+        color: vbarColor
+      },
       type: "bar"
     };
 
@@ -50,7 +54,8 @@ function buildGraphs() {
         title: "Acres",
         // titlefont: { size: 20 },
         automargin: true
-      }
+      },
+      paper_bgcolor: paper_bgcolor
     }
 
     Plotly.newPlot("acres_plot", barData, barLayout, { responsive: true, displayModeBar: false });
@@ -75,7 +80,7 @@ function buildGraphs() {
       y: visitation,
       x: names,
       marker: {
-        color: 'lightblue'
+        color: vbarColor
       }
     }
     //assign the trace to the data variable
@@ -86,8 +91,9 @@ function buildGraphs() {
       // width: 450,
       // height: 500,
       xaxis: { tickangle: 45, automargin: true },
-      yaxis: {title: "Annual Visitors", automargin: true},
-      title: `Most Visited Parks`,
+      yaxis: {title: "Total Visitors", automargin: true},
+      title: "Most Visited Parks (1904 to 2016)",
+      paper_bgcolor: paper_bgcolor
     }
 
     //draw the plot
@@ -112,47 +118,11 @@ function buildGraphs() {
       xaxis: { title: "Number of Rare Species", automargin: true },
       yaxis: { title: "", automargin: true },
       title: "Parks With Most Rare Species",
-      colorway: [barColor]
+      colorway: [barColor],
+      paper_bgcolor: paper_bgcolor
     }
     Plotly.newPlot('rare_plot', data, layout, { responsive: true, displayModeBar: false })
   })
-
-  d3.json("/api/v1.0/Top 10 Parks visited").then(function (data) {
-    // Check the data
-    console.log(data);
-    // Create variables to hold park names and visitation
-
-    var names = data.map(row => row.park_name);
-    // console.log(names);
-
-    var visitation = data.map(row => row.sum);
-    // console.log(visitation);
-
-    //build the trace for the bar graph
-    var trace1 = {
-      type: "bar",
-      y: visitation,
-      x: names,
-      marker: {
-        color: 'lightblue'
-      }
-    }
-    //assign the trace to the data variable
-    var data = [trace1];
-
-    //configure the graph layout
-    var layout = {
-      // width: 450,
-      // height: 500,
-      xaxis: { tickangle: 45, automargin: true },
-      yaxis: {title: "Annual Visitors", automargin: true},
-      title: `Most Visited Parks`,
-    }
-
-    //draw the plot
-    Plotly.newPlot("top10_visit_plot", data, layout, { responsive: true, displayModeBar: false });
-
-  });
 
   // Trail miles graph
   var barColor = "#70100a"
@@ -169,7 +139,8 @@ function buildGraphs() {
       xaxis: { title: "Trail Miles", automargin: true },
       yaxis: { title: "", automargin: true },
       title: "Parks With Most Trail Miles",
-      colorway: [barColor]
+      colorway: [barColor],
+      paper_bgcolor: paper_bgcolor
     }
     Plotly.newPlot('trail_plot', data, layout, { responsive: true, displayModeBar: false })
   })

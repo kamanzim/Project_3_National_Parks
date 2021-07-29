@@ -4,6 +4,12 @@ body {
   background-color: rgb(154, 168, 125);
 }
 
+a.anchor {
+  display: block;
+  position: relative;
+  top: -100px;
+  visibility: hidden;
+}
 
 /* .navbar {
   max-height: 55px;
@@ -18,8 +24,14 @@ body {
   padding:10px; 
   font-weight:bolder; 
   background-color: darkkhaki;
-  font-family: 'Times New Roman', Times, serif; */
-}
+  font-family: 'Times New Roman', Times, serif; 
+}*/
+
+/* .navbar {
+  width: inherit;
+  left: 50%;
+  transform: translateX(-50%);
+  } */
 
 /* .graphs {
   /* padding-top: 30px; */
