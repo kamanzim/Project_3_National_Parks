@@ -275,7 +275,7 @@ def rare_species():
 @app.route("/api/v1.0/top_10_arces")
 def top_10_acres():
     cursor = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = "select TRIM(TRAILING 'Park ' from park_name) as park_name, sum(acres) from national_parks \
+    query = "select TRIM(TRAILING 'Park ' from park_name) as park_name, acres from national_parks \
              group by park_name order by 2 desc LIMIT 10;"
     cursor.execute(query)
     columns = list(cursor.description)

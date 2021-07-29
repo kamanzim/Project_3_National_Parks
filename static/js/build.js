@@ -22,10 +22,10 @@ function buildGraphs() {
 
   // Build the top 10 parks per arcers
   d3.json("/api/v1.0/top_10_arces").then((data) => {
-
+    console.log("acres",data)
     var parkName = data.map(d => d.park_name);
     //console.log(parkName);
-    var totalAcres = data.map(t => t.sum);
+    var totalAcres = data.map(t => t.acres);
     //console.log(totalAcres);
 
     // bar chart
@@ -39,21 +39,21 @@ function buildGraphs() {
     var barData = [trace1];
 
     var barLayout = {
-      title: "Total Acres per National Park",
-      width: 450,
-      height: 500,
+      title: "Largest Parks",
+      // width: 450,
+      // height: 500,
       // margin: { t: 50, b: 175, l: 100, r: 100 },
       // margin: { b: 175 },
       xaxis: { tickangle: 45, automargin: true},
       yaxis: {
         gridwidth: 2,
-        title: "Acres per milliion",
-        titlefont: { size: 20 },
+        title: "Acres",
+        // titlefont: { size: 20 },
         automargin: true
       }
     }
 
-    Plotly.newPlot("acres_plot", barData, barLayout, { responsive: true });
+    Plotly.newPlot("acres_plot", barData, barLayout, { responsive: true, displayModeBar: false });
   })
 
   // Top 10 bar graph
@@ -83,14 +83,15 @@ function buildGraphs() {
 
     //configure the graph layout
     var layout = {
-      width: 450,
-      height: 500,
+      // width: 450,
+      // height: 500,
       xaxis: { tickangle: 45, automargin: true },
-      title: `Top 10 National Parks by Visitation`,
+      yaxis: {title: "Annual Visitors", automargin: true},
+      title: `Most Visited Parks`,
     }
 
     //draw the plot
-    Plotly.newPlot("top10_visit_plot", data, layout, { responsive: true });
+    Plotly.newPlot("top10_visit_plot", data, layout, { responsive: true, displayModeBar: false });
 
   });
 
@@ -110,13 +111,72 @@ function buildGraphs() {
     layout = {
       xaxis: { title: "Number of Rare Species", automargin: true },
       yaxis: { title: "", automargin: true },
-      title: "Parks With The Greatest Number of Rare Species",
+      title: "Parks With Most Rare Species",
       colorway: [barColor]
     }
     Plotly.newPlot('rare_plot', data, layout, { responsive: true, displayModeBar: false })
   })
 
+  d3.json("/api/v1.0/Top 10 Parks visited").then(function (data) {
+    // Check the data
+    console.log(data);
+    // Create variables to hold park names and visitation
+
+    var names = data.map(row => row.park_name);
+    // console.log(names);
+
+    var visitation = data.map(row => row.sum);
+    // console.log(visitation);
+
+    //build the trace for the bar graph
+    var trace1 = {
+      type: "bar",
+      y: visitation,
+      x: names,
+      marker: {
+        color: 'lightblue'
+      }
+    }
+    //assign the trace to the data variable
+    var data = [trace1];
+
+    //configure the graph layout
+    var layout = {
+      // width: 450,
+      // height: 500,
+      xaxis: { tickangle: 45, automargin: true },
+      yaxis: {title: "Annual Visitors", automargin: true},
+      title: `Most Visited Parks`,
+    }
+
+    //draw the plot
+    Plotly.newPlot("top10_visit_plot", data, layout, { responsive: true, displayModeBar: false });
+
+  });
+
+  // Trail miles graph
+  var barColor = "#70100a"
+  d3.json("/api/v1.0/Trail_Miles").then(t => {
+
+    trace1 = {
+      y: t.map(n => n.park_name).reverse(),
+      x: t.map(n => n.sum).reverse(),
+      type: "bar",
+      orientation: "h"
+    }
+    data = [trace1]
+    layout = {
+      xaxis: { title: "Trail Miles", automargin: true },
+      yaxis: { title: "", automargin: true },
+      title: "Parks With Most Trail Miles",
+      colorway: [barColor]
+    }
+    Plotly.newPlot('trail_plot', data, layout, { responsive: true, displayModeBar: false })
+  })
+
 }
+
+
 
 
 function init() {

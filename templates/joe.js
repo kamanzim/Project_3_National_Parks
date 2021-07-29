@@ -1,6 +1,7 @@
-var species_url = "rare_species.json"
-var barColor = "34ebd2"
-d3.json(species_url).then(species=>{
+var rare_species_url = "/api/v1.0/rare_species"
+//var rare_species_url = "rare_species.json"
+var barColor = "#70100a"
+d3.json(rare_species_url).then(species=>{
     
         trace1 = {
             y:species.map(n=>n.park_name).reverse(),
@@ -15,5 +16,5 @@ d3.json(species_url).then(species=>{
             title: "Parks With The Greatest Number of Rare Species",
             colorway: [barColor]
         }
-        Plotly.newPlot('rare_plot',data,layout)
+        Plotly.newPlot('rare_plot',data,layout,{responsive:true,displayModeBar: false})
     })

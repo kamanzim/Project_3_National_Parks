@@ -33,27 +33,31 @@
           <h2 class="card-title">National Parks</h2>
           <img src="../static/img/national_park_service.gif" height="150px">
         </div>
-      </div>
 
 
     <!-- <div class="container-fluid"> -->
     <div class="graphs">
-      <div class="row">
-        <div class="col-md-4 col-lg-4">
+      <div class="row gy-4">
+        <div class="col-md-6 col-xl-3">
           <div id="top10_visit_plot"></div>
         </div>
-        <div class="col-md-4 col-lg-4">
+        <div class="col-md-6 col-xl-3">
           <div id="acres_plot"></div>
         </div>
-        <div class="col-md-4 col-lg-4">
+        <div class="col-md-6 col-xl-3">
           <div id="rare_plot"></div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+          <div id="trail_plot"></div>
         </div>
       </div>
     </div>
+    <br>
 
-    <div class="row">
+    <div class="row" style="height: 350px">
       <div class="col-md-4">
-        <div class="card text-white bg-secondary mb-3" style="max-width: 26rem;">
+        <div class="card text-white bg-secondary mb-3" style="height: 350px" >
+        <!-- style="max-width: 100%;"> -->
           <h4>Park Name:</h4>
           <select id="parkDataset" onchange="parkChange(this.value)"></select>
           <div class="card-body">
@@ -64,8 +68,11 @@
           <div id="park-metadata"></div>
         </div>
       </div>
+      <div class = "col-md-8">
+        <img id = "wonderCalls" class="image-fluid h-100" src="/static/data/wonder_calls.jpg">
+
+      </div>
     </div>
-  </div>
 
 
   <div class="row h-100 justify-content-center" id="mapArea">
@@ -135,7 +142,7 @@
       <div id="map"></div>
     </div>
   </div>
-  </div>
+</div>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
