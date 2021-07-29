@@ -115,7 +115,7 @@ function buttonToggle(element) {
     if (d3.select(element).attr("class") == "btn btn-secondary w-100") {
         clearMap()
         var route = d3.select(element).attr("route")
-        console.log(route)
+        // console.log(route)
         d3.json(route).then(api=>{
             var selParks = api.map(park=>park.park_code)
             showParks("UNIT_CODE", selParks)
@@ -151,9 +151,13 @@ var mymap = L.map('map',{
 
 var getUrl = window.location;
 var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-console.log(baseUrl)
+// console.log(baseUrl)
 
 function getStateCenter(state) {
+    d3.select("#regionSelect").html("")
+    addRegions()
+    d3.select("#parkSelect").html("")
+    addParks()
     buttonReset()
     if (state == "default") {
         clearMap()
@@ -172,6 +176,10 @@ function getStateCenter(state) {
 }
 
 function regionCenter(region) {
+    d3.select("#stateSelect").html("")
+    addStates()
+    d3.select("#parkSelect").html("")
+    addParks()
     buttonReset()
     if (region == "default") {
         clearMap()
@@ -186,6 +194,10 @@ function regionCenter(region) {
 }
 
 function goToPark(park_code) {
+    d3.select("#regionSelect").html("")
+    addRegions()
+    d3.select("#stateSelect").html("")
+    addStates()
     buttonReset()
 
     if (park_code == "default") {

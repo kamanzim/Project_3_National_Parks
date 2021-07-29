@@ -23,7 +23,6 @@ function buildGraphs() {
   var vbarColor = "#4974a5"
   // Build the top 10 parks per arcers
   d3.json("/api/v1.0/top_10_arces").then((data) => {
-    console.log("acres",data)
     var parkName = data.map(d => d.park_name);
     //console.log(parkName);
     var totalAcres = data.map(t => t.acres);
@@ -65,8 +64,7 @@ function buildGraphs() {
   // Grab the API URL 
   d3.json("/api/v1.0/Top 10 Parks visited").then(function (data) {
     // Check the data
-    console.log(data);
-    // Create variables to hold park names and visitation
+        // Create variables to hold park names and visitation
 
     var names = data.map(row => row.park_name);
     // console.log(names);
