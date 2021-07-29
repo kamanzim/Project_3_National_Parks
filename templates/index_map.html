@@ -28,11 +28,33 @@
 
 <body>
   <div class="container-fluid">
-      <div class="card text-center border-0" style="background-color: rgb(154, 168, 125)">
+      <!-- <div class="card border-0" style="background-color:#6c757d">
         <div class="card-body">
           <h2 class="card-title">National Parks</h2>
-          <img src="../static/img/national_park_service.gif" height="150px">
+          <img src="../static/img/national_park_service.gif" height="100px">
         </div>
+      </div> -->
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#6c757d">
+        <a class="navbar-brand mx-2" href="#">
+          <img src="../static/img/national_park_service.gif" height="30" class="d-inline-block align-top" alt="">
+          Explore the National Parks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Top Ten Parks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Park Information</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#mapLink">Interactive Park Map</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
 
     <!-- <div class="container-fluid"> -->
@@ -61,7 +83,7 @@
           <h4>Park Name:</h4>
           <select id="parkDataset" onchange="parkChange(this.value)"></select>
           <div class="card-body">
-            <h4 class="card-title"> <img src="../static/img/national_park_service.gif" width="30" height="24">
+            <h4 class="card-title"> <img src="../static/img/national_park_service.gif" height="24">
               Park Information
             </h4>
           </div>
@@ -74,8 +96,9 @@
       </div>
     </div>
 
-
+    <a id="mapLink">
   <div class="row h-100 justify-content-center" id="mapArea">
+  </a>
     <div class="col-2 px-4" id="filterArea">
       <p>
       <div id="gauge"></div>
