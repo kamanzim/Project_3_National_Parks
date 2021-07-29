@@ -34,7 +34,6 @@ a.anchor {
   } */
 
 /* .graphs {
-  /* padding-top: 30px; */
   padding-bottom: 20px;
   font-weight: bolder;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
@@ -54,7 +53,7 @@ a.anchor {
 
 #wonderCalls {
   object-fit: none;
-  object-position: center; Center the image within the element
+  object-position: center; /* Center the image within the element */
   height: 100%;
   width: 100%;
   /* height: 100px; */
