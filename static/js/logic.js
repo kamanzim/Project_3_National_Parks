@@ -48,6 +48,7 @@ function gauge(parksDisplayed) {
             t: 20,
             pad: 4
           },
+          value_align: "center",
           paper_bgcolor: "#eeefee"};
         Plotly.newPlot('gauge', data, layout,{responsive:true,displayModeBar: false});
 };
